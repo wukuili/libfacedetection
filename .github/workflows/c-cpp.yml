@@ -30,11 +30,10 @@ jobs:
 
     - name: Create artifacts
       run: |
-        cd libfacedetection/build
         mkdir artifacts
-        cp -r * artifacts
+        cp -r libfacedetection/build/* artifacts
       # Archive the artifacts
       uses: actions/upload-artifact@v2
       with:
         name: libfacedetection-artifacts
-        path: libfacedetection/build/artifacts
+        path: artifacts
