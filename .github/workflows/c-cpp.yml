@@ -1,9 +1,17 @@
 name: Build libfacedetection
 
-on:
+on: 
+  release:
+    types: [published]
   push:
-    branches:
-      - main
+    tags:
+    - 'v*'
+  #  branches: 
+  #    - master
+#  schedule:
+#    - cron: 0 8 * * 5
+  watch:
+    types: [started]
 
 jobs:
   build:
