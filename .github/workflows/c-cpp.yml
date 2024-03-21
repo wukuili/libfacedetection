@@ -1,0 +1,40 @@
+name: Build libfacedetection
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake git libopencv-dev
+
+    - name: Clone libfacedetection repository
+      run: git clone https://github.com/ShiqiYu/libfacedetection.git
+
+    - name: Build libfacedetection
+      run: |
+        cd libfacedetection
+        mkdir build && cd build
+        cmake ..
+        make
+
+    - name: Create artifacts
+      run: |
+        cd libfacedetection/build
+        mkdir artifacts
+        cp -r * artifacts
+      # Archive the artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: libfacedetection-artifacts
+        path: libfacedetection/build/artifacts
